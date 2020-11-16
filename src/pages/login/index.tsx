@@ -1,6 +1,15 @@
 import React, { FormEvent, useState } from 'react';
-import { Container } from './style';
-import { Box, Button, Card, CardContent, TextField, Typography, FormHelperText } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  TextField,
+  Typography,
+  FormHelperText,
+  Container,
+  makeStyles,
+} from '@material-ui/core';
 import api from '../../services/api';
 import * as Yup from 'yup';
 import { ValidationErrors, getValidationErrors } from '../../utils/validationErrors';
@@ -10,10 +19,24 @@ interface FormInputs extends ValidationErrors {
   password: string;
 }
 
+const useStyles = makeStyles({
+  card: {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  },
+  cardContent: {
+    padding: '1.5rem',
+    width: '300px',
+  }
+});
+
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validationErrors, setValidationErrors] = useState<FormInputs | null>(null);
+  const classes = useStyles();
   
   async function handleLogin(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
@@ -59,12 +82,12 @@ const Login: React.FC = () => {
   }
 
   return (
-    <Container>
+    <Container maxWidth="sm">
       <Typography variant="h4" component="h4" align="center">
         Login
       </Typography>
-      <Card className="card" variant="outlined">
-        <CardContent>
+      <Card className={classes.card} variant="outlined">
+        <CardContent className={classes.cardContent}>
           <form onSubmit={handleLogin}>
             <div>
               <TextField
