@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   TableContainer,
   Table,
@@ -10,9 +11,8 @@ import {
   Box,
   Container,
 } from '@material-ui/core';
-import React from 'react';
 import CardTotal from './components/cardTotal';
-import RowActions from './components/rowActions';
+import QuantityRow from './components/quantityRow';
 
 const ProductsList: React.FC = () => {
   const rows = [
@@ -63,7 +63,7 @@ const ProductsList: React.FC = () => {
                   </TableCell>
                   <TableCell align="center">{row.price}</TableCell>
                   <TableCell align="center">
-                    <RowActions />
+                    <QuantityRow />
                   </TableCell>
                 </TableRow>
               ))}

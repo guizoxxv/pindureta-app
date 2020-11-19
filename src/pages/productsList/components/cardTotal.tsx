@@ -1,4 +1,5 @@
-import { Button, Paper, Typography } from '@material-ui/core';
+import { Button, Paper, Typography, Box } from '@material-ui/core';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import React from 'react';
 
 const CardTotal: React.FC = () => (
@@ -16,8 +17,11 @@ const CardTotal: React.FC = () => (
     <Typography component="span" style={{ marginRight: '2rem' }}>
       <b>Total:</b> $100.00
     </Typography>
-    <Button variant="contained" color="primary" size="large">
-      Pay
+    <Button href="/cart" variant="contained" color="primary" size="large">
+      <ShoppingCartIcon />
+      <Box ml={0.5}>
+        Go to Cart
+      </Box>
     </Button>
   </Paper>
 );
