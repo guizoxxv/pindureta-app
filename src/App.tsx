@@ -4,6 +4,7 @@ import { OrderProvider } from './context/order';
 import Routes from './routes';
 import { BrowserRouter } from 'react-router-dom';
 import ProductProvider from './context/product';
+import './style.css';
 
 const App: React.FC = () => (
   <BrowserRouter>

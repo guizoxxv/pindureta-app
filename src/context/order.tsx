@@ -10,6 +10,7 @@ interface OrderContextData {
   decreaseQuantity(productId: string): void;
   removeItem(productId: string): void;
   getTotal(): number;
+  order: Order;
 }
 
 export const OrderContext = createContext<OrderContextData>({} as OrderContextData);
@@ -17,15 +18,16 @@ export const OrderContext = createContext<OrderContextData>({} as OrderContextDa
 export const OrderProvider: React.FC = ({ children }) => {
   const { getProduct } = useContext(ProductContext);
 
-  const [order, setOrder] = useState<Order>(() => {
-    const orderFromStorage = localStorage.getItem(`@${appName}:order`);
+  // const [order, setOrder] = useState<Order>(() => {
+  //   const orderFromStorage = localStorage.getItem(`@${appName}:order`);
 
-    if (orderFromStorage) {
-      return JSON.parse(orderFromStorage);
-    } 
+  //   if (orderFromStorage) {
+  //     return JSON.parse(orderFromStorage);
+  //   }
 
-    return []; 
-  });
+  //   return {} as Order;
+  // });
+  const [order, setOrder] = useState<Order>({} as Order);
 
   const getQuantityRow = useCallback((productId: string): number => {
     const orderItem = order[productId];
@@ -104,7 +106,8 @@ export const OrderProvider: React.FC = ({ children }) => {
       increaseQuantity,
       decreaseQuantity,
       removeItem,
-      getTotal
+      getTotal,
+      order,
     }}>
       {children}
     </OrderContext.Provider>

@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 
 const PayNowDialog: React.FC = () => {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
