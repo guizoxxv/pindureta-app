@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Product from './interfaces/product';
+import Product from '../interfaces/product';
 import productsData from '../data/products.json';
 import LoginCredentials from '../interfaces/loginCredentials';
 
@@ -14,6 +14,7 @@ export async function logInRequest(credentials: LoginCredentials): Promise<void>
   });
 };
 
-export function getProducts(): Product[] {
-  return productsData.data;
+export async function getProducts(): Promise<Product[]> {
+  // return await api.get('/products');
+  return await productsData.data;
 }

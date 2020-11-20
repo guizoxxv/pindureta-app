@@ -13,23 +13,44 @@ import {
 } from '@material-ui/core';
 import CardTotal from './components/cardTotal';
 import QuantityRow from './components/quantityRow';
-import Product from '../../services/interfaces/product';
+import Product from '../../interfaces/product';
+import OrderItem from '../../interfaces/orderItem';
 import { getProducts } from '../../services/api';
 
 const ProductsList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>(() => {
-    const productsJson = localStorage.getItem('@pinduretaFront:products');
+    const productsFromStorage = localStorage.getItem('@pinduretaFront:products');
 
-    if (productsJson) {
-      return  JSON.parse(productsJson);
+    if (productsFromStorage) {
+      return JSON.parse(productsFromStorage);
     }
 
-    const response = getProducts();
+    const getProductsResponse = getProducts();
 
-    localStorage.setItem('@pinduretaFront:products', JSON.stringify(response));
+    localStorage.setItem('@pinduretaFront:products', JSON.stringify(getProductsResponse));
     
-    return response;
+    return getProductsResponse;
   });
+
+  const [order, setOrder] = useState<OrderItem[]>(() => {
+    const orderFromStorage = localStorage.getItem('@pinduretaFront:order');
+
+    if (orderFromStorage) {
+      return JSON.parse(orderFromStorage);
+    } 
+
+    return []; 
+  });
+
+  function getQuantityRow(id: string): number {
+    const orderItem = order.find(orderItem => orderItem.id === id);
+
+    if (orderItem) {
+      return orderItem.quantity;
+    }
+
+    return 0;
+  }
 
   return (
     <Container>
@@ -56,7 +77,7 @@ const ProductsList: React.FC = () => {
                   </TableCell>
                   <TableCell align="center">{product.price}</TableCell>
                   <TableCell align="center">
-                    <QuantityRow />
+                    <QuantityRow quantity={getQuantityRow(product.id)} />
                   </TableCell>
                 </TableRow>
               ))}
