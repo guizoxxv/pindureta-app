@@ -56,7 +56,7 @@ const Card: React.FC = () => {
               </TableCell>
               <TableCell align="center">10</TableCell>
               <TableCell align="center">
-                <QuantityRow quantity={0} />
+                <QuantityRow productId={"123"} />
               </TableCell>
               <TableCell align="center">100</TableCell>
             </TableRow>

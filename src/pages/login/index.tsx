@@ -35,7 +35,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [validationErrors, setValidationErrors] = useState<FormInputs | null>(null);
   const classes = useStyles();
-  const { logIn } = useContext(AuthContext); 
+  const { login } = useContext(AuthContext); 
   
   // Transformar em useCallback
   async function handleLogin(event: FormEvent<HTMLFormElement>): Promise<void> {
@@ -54,7 +54,7 @@ const Login: React.FC = () => {
         abortEarly: false,
       });
 
-      logIn({
+      login({
         email,
         password,
       });

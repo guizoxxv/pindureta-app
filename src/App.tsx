@@ -1,16 +1,16 @@
 import React from 'react';
 import { AuthProvider } from './context/auth';
-import { AppProvider } from './context/app';
+import { OrderProvider } from './context/order';
 import Routes from './routes';
 import { BrowserRouter } from 'react-router-dom';
 
 const App: React.FC = () => (
   <BrowserRouter>
-    <AppProvider>
-      <AuthProvider>
+    <AuthProvider>
+      <OrderProvider>
         <Routes />
-      </AuthProvider>
-    </AppProvider>
+      </OrderProvider>
+    </AuthProvider>
   </BrowserRouter>
 );
 

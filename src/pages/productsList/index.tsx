@@ -14,43 +14,12 @@ import {
 import CardTotal from './components/cardTotal';
 import QuantityRow from './components/quantityRow';
 import Product from '../../interfaces/product';
-import OrderItem from '../../interfaces/orderItem';
 import { getProducts } from '../../services/api';
 
 const ProductsList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>(() => {
-    const productsFromStorage = localStorage.getItem('@pinduretaFront:products');
-
-    if (productsFromStorage) {
-      return JSON.parse(productsFromStorage);
-    }
-
-    const getProductsResponse = getProducts();
-
-    localStorage.setItem('@pinduretaFront:products', JSON.stringify(getProductsResponse));
-    
-    return getProductsResponse;
+    return getProducts();
   });
-
-  const [order, setOrder] = useState<OrderItem[]>(() => {
-    const orderFromStorage = localStorage.getItem('@pinduretaFront:order');
-
-    if (orderFromStorage) {
-      return JSON.parse(orderFromStorage);
-    } 
-
-    return []; 
-  });
-
-  function getQuantityRow(id: string): number {
-    const orderItem = order.find(orderItem => orderItem.id === id);
-
-    if (orderItem) {
-      return orderItem.quantity;
-    }
-
-    return 0;
-  }
 
   return (
     <Container>
@@ -70,14 +39,14 @@ const ProductsList: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {products.map((product, key) => (
+              {products && products.map((product, key) => (
                 <TableRow key={key}>
                   <TableCell component="th" scope="row">
                     {product.name}
                   </TableCell>
                   <TableCell align="center">{product.price}</TableCell>
                   <TableCell align="center">
-                    <QuantityRow quantity={getQuantityRow(product.id)} />
+                    <QuantityRow productId={product.id} />
                   </TableCell>
                 </TableRow>
               ))}
