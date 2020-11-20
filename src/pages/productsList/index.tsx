@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   TableContainer,
   Table,
@@ -13,30 +13,23 @@ import {
 } from '@material-ui/core';
 import CardTotal from './components/cardTotal';
 import QuantityRow from './components/quantityRow';
+import Product from '../../services/interfaces/product';
+import { getProducts } from '../../services/api';
 
 const ProductsList: React.FC = () => {
-  const rows = [
-    {
-      name:'Frozen yoghurt',
-      price: 10,
-    },
-    {
-      name:'Ice cream sandwich',
-      price: 15,
-    },
-    {
-      name:'Eclair',
-      price: 20,
-    },
-    {
-      name:'Cupcake',
-      price: 25,
-    },
-    {
-      name:'Gingerbread',
-      price: 30,
-    },
-  ];
+  const [products, setProducts] = useState<Product[]>(() => {
+    const productsJson = localStorage.getItem('@pinduretaFront:products');
+
+    if (productsJson) {
+      return  JSON.parse(productsJson);
+    }
+
+    const response = getProducts();
+
+    localStorage.setItem('@pinduretaFront:products', JSON.stringify(response));
+    
+    return response;
+  });
 
   return (
     <Container>
@@ -56,12 +49,12 @@ const ProductsList: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row, key) => (
+              {products.map((product, key) => (
                 <TableRow key={key}>
                   <TableCell component="th" scope="row">
-                    {row.name}
+                    {product.name}
                   </TableCell>
-                  <TableCell align="center">{row.price}</TableCell>
+                  <TableCell align="center">{product.price}</TableCell>
                   <TableCell align="center">
                     <QuantityRow />
                   </TableCell>

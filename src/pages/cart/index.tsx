@@ -11,10 +11,12 @@ import {
   Box,
   Container,
   Button,
+  IconButton,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import QuantityRow from '../productsList/components/quantityRow';
 import PaymentButtons from './components/paymentButtons';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const Card: React.FC = () => {
   return (
@@ -24,6 +26,9 @@ const Card: React.FC = () => {
           Cart 
         </Typography>
         <Button href="/" variant="contained" size="medium">
+          <Box mr={1} display="flex" alignItems="center">
+            <ArrowBackIcon />
+          </Box>
           Return to list
         </Button>
       </Box>
@@ -41,7 +46,9 @@ const Card: React.FC = () => {
             <TableRow>
               <TableCell component="th" scope="row">
                 <Box display="flex" alignItems="center">
-                  <DeleteIcon fontSize="large" />
+                  <IconButton aria-label="remove">
+                    <DeleteIcon fontSize="large" />
+                  </IconButton>
                   <Box ml={2}>
                     Produto 1
                   </Box>

@@ -34,6 +34,7 @@ const PayNowDialog: React.FC = () => {
           label="Value"
           type="number"
           fullWidth
+          InputProps={{ inputProps: { min: 0 } }}
         />
       </DialogContent>
       <DialogActions>

@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useContext, useState } from 'react';
 import {
   Box,
   Button,
@@ -10,14 +10,12 @@ import {
   Container,
   makeStyles,
 } from '@material-ui/core';
-import api from '../../services/api';
 import * as Yup from 'yup';
 import { ValidationErrors, getValidationErrors } from '../../utils/validationErrors';
+import { AuthContext } from '../../context/auth'; 
+import LoginCredentials from '../../interfaces/loginCredentials';
 
-interface FormInputs extends ValidationErrors {
-  email: string;
-  password: string;
-}
+interface FormInputs extends LoginCredentials, ValidationErrors {};
 
 const useStyles = makeStyles({
   card: {
@@ -37,7 +35,9 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [validationErrors, setValidationErrors] = useState<FormInputs | null>(null);
   const classes = useStyles();
+  const { logIn } = useContext(AuthContext); 
   
+  // Transformar em useCallback
   async function handleLogin(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
 
@@ -54,9 +54,10 @@ const Login: React.FC = () => {
         abortEarly: false,
       });
 
-      console.log('Valid form');
-      // const response = await api.post('login');
-      // console.log(response.data);
+      logIn({
+        email,
+        password,
+      });
     } catch(err) {
       if (err instanceof Yup.ValidationError) {
         const validationErrors = getValidationErrors(err);
