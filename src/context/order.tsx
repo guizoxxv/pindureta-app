@@ -1,19 +1,23 @@
 
-import React, { createContext, useCallback, useState } from 'react';
+import React, { createContext, useCallback, useContext, useState } from 'react';
 import { appName } from '../config';
-import OrderItem from '../interfaces/orderItem';
+import Order from '../interfaces/order';
+import { ProductContext } from './product';
 
 interface OrderContextData {
   getQuantityRow(productId: string): number;
   increaseQuantity(productId: string): void;
   decreaseQuantity(productId: string): void;
   removeItem(productId: string): void;
+  getTotal(): number;
 }
 
 export const OrderContext = createContext<OrderContextData>({} as OrderContextData);
 
 export const OrderProvider: React.FC = ({ children }) => {
-  const [order, setOrder] = useState<OrderItem[]>(() => {
+  const { getProduct } = useContext(ProductContext);
+
+  const [order, setOrder] = useState<Order>(() => {
     const orderFromStorage = localStorage.getItem(`@${appName}:order`);
 
     if (orderFromStorage) {
@@ -24,7 +28,7 @@ export const OrderProvider: React.FC = ({ children }) => {
   });
 
   const getQuantityRow = useCallback((productId: string): number => {
-    const orderItem = order.find(orderItem => orderItem.id === productId);
+    const orderItem = order[productId];
 
     if (orderItem) {
       return orderItem.quantity;
@@ -34,49 +38,73 @@ export const OrderProvider: React.FC = ({ children }) => {
   }, [order]);
 
   const increaseQuantity = useCallback((productId: string): void => {
-    const orderItem = order.find(orderItem => orderItem.id === productId);
+    const orderItem = order[productId];
 
     if (orderItem) {
-      const newOrder = order.map(item => {
-        if (item.id === orderItem.id) {
-          return {
-            ...item,
-            quantity: item.quantity + 1,
-          }
-        }
-
-        return item;
-      });
-
-      setOrder(newOrder);
-    } else {
-      setOrder([
+      setOrder({
         ...order,
-        {
-          id: productId,
-          name: 'Product name',
-          price: 10,
-          quantity: 1,
-          total: 10,
+        [productId]: {
+          ...orderItem,
+          quantity: orderItem.quantity + 1,
+          total: orderItem.total + orderItem.price,
         }
-      ]);
+      });
+    } else {
+      const product = getProduct(productId);
+
+      if (!product) {
+        throw Error('Invalid product id');
+      }
+
+      setOrder({
+        ...order,
+        [productId]: {
+          ...product,
+          quantity: 1,
+          total: product.price,
+        }
+      });
     }
   }, [order]);
 
   const decreaseQuantity = useCallback((productId: string): void => {
-    console.log('decreaseQuantity');
-  }, []);
+    const orderItem = order[productId];
+
+    if (orderItem) {
+      if (orderItem.quantity > 1) {
+        setOrder({
+          ...order,
+          [productId]: {
+            ...orderItem,
+            quantity: orderItem.quantity - 1,
+            total: orderItem.total - orderItem.price,
+          }
+        });
+      } else {
+        removeItem(productId);
+      }
+    }
+  }, [order]);
 
   const removeItem = useCallback((productId: string): void => {
-    console.log('removeItem');
-  }, []);
+    delete order[productId];
+    
+    setOrder({ ...order });
+  }, [order]);
+
+  const getTotal = useCallback((): number => {
+    return Object.values(order).reduce((accumulator, currentValue) => {
+      return accumulator + currentValue.total;
+    }, 0);
+  }, [order]);
 
   return (
     <OrderContext.Provider value={{
       getQuantityRow,
       increaseQuantity,
       decreaseQuantity,
-      removeItem
+      removeItem,
+      getTotal
     }}>
       {children}
     </OrderContext.Provider>

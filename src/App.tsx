@@ -3,13 +3,16 @@ import { AuthProvider } from './context/auth';
 import { OrderProvider } from './context/order';
 import Routes from './routes';
 import { BrowserRouter } from 'react-router-dom';
+import ProductProvider from './context/product';
 
 const App: React.FC = () => (
   <BrowserRouter>
     <AuthProvider>
-      <OrderProvider>
-        <Routes />
-      </OrderProvider>
+      <ProductProvider>
+        <OrderProvider>
+          <Routes />
+        </OrderProvider>
+      </ProductProvider>
     </AuthProvider>
   </BrowserRouter>
 );

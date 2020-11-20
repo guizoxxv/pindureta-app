@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import {
   TableContainer,
   Table,
@@ -13,13 +13,10 @@ import {
 } from '@material-ui/core';
 import CardTotal from './components/cardTotal';
 import QuantityRow from './components/quantityRow';
-import Product from '../../interfaces/product';
-import { getProducts } from '../../services/api';
+import { ProductContext } from '../../context/product';
 
 const ProductsList: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>(() => {
-    return getProducts();
-  });
+  const { products } = useContext(ProductContext);
 
   return (
     <Container>
