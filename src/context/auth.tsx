@@ -12,6 +12,7 @@ interface AuthState {
 interface AuthContextData {
   user: object,
   login(credentials: LoginCredentials): Promise<void>,
+  logout(): void;
 }
 
 export const AuthContext = createContext<AuthContextData>(
@@ -45,8 +46,16 @@ export const AuthProvider: React.FC = ({ children }) => {
     })
   }, []);
 
+  const logout = useCallback((): void => {
+    console.log('logout');
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user: data.user, login }}>
+    <AuthContext.Provider value={{
+      user: data.user,
+      login,
+      logout,
+    }}>
       {children}
     </AuthContext.Provider>
   );

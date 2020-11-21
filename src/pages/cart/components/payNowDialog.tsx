@@ -80,7 +80,7 @@ const PayNowDialog: React.FC = () => {
             Total: ${getTotal()}
           </Typography>
         </Box>
-        <div>
+        <Box mb={1}>
           <TextField
             margin="dense"
             label="Value"
@@ -97,7 +97,7 @@ const PayNowDialog: React.FC = () => {
               {validationErrors.total}
             </FormHelperText>
           )}
-        </div>
+        </Box>
       </DialogContent>
       <DialogActions>
         <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">

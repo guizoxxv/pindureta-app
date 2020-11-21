@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   TableContainer,
   Table,
@@ -20,11 +20,14 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { OrderContext } from '../../context/order';
 import { Link } from 'react-router-dom';
 import FinishDialog from '../../components/finishDialog';
+import { appName } from '../../config';
 
 const Card: React.FC = () => {
   const { order, removeItem, getTotal } = useContext(OrderContext);
   
-  // Save cart on local storage
+  useEffect((): void => {
+    localStorage.setItem(`@${appName}:order`, JSON.stringify(order));
+  }, []);
 
   return (
     <Container>

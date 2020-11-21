@@ -11,11 +11,11 @@ import { OrderContext } from '../../../context/order';
 
 const ClearCardConfirmDialog: React.FC = () => {
   const dialogId = 'clearCardConfirm';
-  const { setOrder } = useContext(OrderContext);
+  const { clear } = useContext(OrderContext);
   const { close, isOpen } = useContext(DialogContext);
 
   const handleConfirm = () => {
-    setOrder({});
+    clear();
 
     close(dialogId);
   }

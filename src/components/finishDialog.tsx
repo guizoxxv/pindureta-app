@@ -5,22 +5,29 @@ import {
   Button,
   Box,
   DialogContent,
-  DialogContentText,
+  Typography,
 } from '@material-ui/core';
 import { DialogContext } from '../context/dialog';
+import { AuthContext } from '../context/auth';
 import { OrderContext } from '../context/order';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const FinishDialog: React.FC = () => {
   const dialogId = 'finish';
-  const { setOrder } = useContext(OrderContext);
+  const { clear } = useContext(OrderContext);
   const { close, isOpen } = useContext(DialogContext);
+  const { logout } = useContext(AuthContext);
 
-  const handleConfirm = () => {
-    setOrder({});
+  const handleFinish = () => {
+    logout();
+  };
 
-    close(dialogId);
+  const handleContinue = () => {
+    clear();
+
+    window.location.href = '/';
   }
-  
+
   return (
     <Dialog
       open={isOpen[dialogId]}
@@ -28,21 +35,19 @@ const FinishDialog: React.FC = () => {
       aria-labelledby="form-dialog-title"
     >
       <DialogContent>
-        <Box>
-          
+        <Box mb={2} display="flex" alignItems="center" justifyContent="center">
+          <CheckCircleIcon fontSize="large" style={{ color: '#4CAF50' }} />
+          <Typography>Order received</Typography>
         </Box>
-        <DialogContentText>
-          You will be logged out in 5s
-        </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">
-          <Button onClick={() => close(dialogId)} variant="contained" color="secondary">
-            Cancel
+          <Button onClick={handleContinue} variant="contained" color="secondary">
+            Continue
           </Button>
           <Box mx={1}></Box>
-          <Button onClick={handleConfirm} variant="contained" color="primary">
-            OK
+          <Button onClick={handleFinish} variant="contained" color="primary">
+            Finish
           </Button>
         </Box>
       </DialogActions>

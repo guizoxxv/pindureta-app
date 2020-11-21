@@ -1,8 +1,6 @@
 
 import React, {
   createContext,
-  Dispatch,
-  SetStateAction,
   useCallback,
   useContext,
   useState
@@ -17,8 +15,8 @@ interface OrderContextData {
   decreaseQuantity(productId: string): void;
   removeItem(productId: string): void;
   getTotal(): number;
+  clear(): void;
   order: Order;
-  setOrder: Dispatch<SetStateAction<Order>>;
 }
 
 export const OrderContext = createContext<OrderContextData>({} as OrderContextData);
@@ -101,6 +99,12 @@ export const OrderProvider: React.FC = ({ children }) => {
     }
   }, [order, removeItem]);
 
+  const clear = useCallback((): void => {
+    setOrder({});
+
+    localStorage.removeItem(`@${appName}:order`);
+  }, [order]);
+
   const getTotal = useCallback((): number => {
     return Object.values(order).reduce((accumulator, currentValue) => {
       return accumulator + currentValue.total;
@@ -114,8 +118,8 @@ export const OrderProvider: React.FC = ({ children }) => {
       decreaseQuantity,
       removeItem,
       getTotal,
+      clear,
       order,
-      setOrder,
     }}>
       {children}
     </OrderContext.Provider>
