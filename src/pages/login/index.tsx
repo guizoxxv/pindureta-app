@@ -63,6 +63,8 @@ const Login: React.FC = () => {
         const validationErrors = getValidationErrors(err);
         setValidationErrors(validationErrors as FormInputs);
       }
+      
+      // Open toast
     }
   }
 
@@ -95,10 +97,10 @@ const Login: React.FC = () => {
                 label="E-mail"
                 type="email"
                 variant="outlined"
-                fullWidth
                 value={email}
                 onChange={e => setEmailHandler(e.target.value)}
                 error={Boolean(validationErrors?.email)}
+                fullWidth
               />
               {validationErrors?.email && (
                 <FormHelperText error={true}>
@@ -111,10 +113,10 @@ const Login: React.FC = () => {
                 label="Password"
                 type="password"
                 variant="outlined"
-                fullWidth
                 value={password}
                 onChange={e => setPasswordHandler(e.target.value)}
                 error={Boolean(validationErrors?.password)}
+                fullWidth
               />
               {validationErrors?.password && (
                 <FormHelperText error={true}>

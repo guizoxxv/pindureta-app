@@ -13,15 +13,29 @@ const api = axios.create({
 });
 
 export async function loginRequest(credentials: LoginCredentials): Promise<LoginResponse> {
-  const response = await api.post<LoginResponse>('/login', {
-    email: credentials.email,
-    password: credentials.password,
-  });
+  try {
+    const response = await api.post<LoginResponse>('/login', {
+      email: credentials.email,
+      password: credentials.password,
+    });
 
-  return response.data;
+    return response.data;
+  } catch (e) {
+    throw e;
+  }
 };
 
 export function getProducts(): Product[] {
   // return await api.get('/products');
   return productsData.data;
+}
+
+export async function payRequest(value: number): Promise<void> {
+  try {
+    await api.post('/pay', {
+      value,
+    });
+  } catch (e) {
+    throw e;
+  }
 }

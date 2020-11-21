@@ -14,6 +14,7 @@ interface DialogState {
 const dialogs: DialogState = {
   clearCardConfirm: false,
   payNow: false,
+  finish: false,
 }
 
 export const DialogContext = createContext<DialogContextData>({} as DialogContextData);
@@ -31,7 +32,7 @@ export const DialogProvider: React.FC = ({ children }) => {
   const close = useCallback((dialogId: string): void => {
     setIsOpen({
       ...isOpen,
-      [dialogId]: true,
+      [dialogId]: false,
     })
   }, [isOpen]);
 

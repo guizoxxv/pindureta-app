@@ -1,10 +1,17 @@
 
-import React, { createContext, useCallback, useState } from 'react';
+import React, {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useState
+} from 'react';
 import Product from '../interfaces/product';
 import { getProducts } from '../services/api';
 
 interface ProductContextData {
   products: Product[];
+  setProducts: Dispatch<SetStateAction<Product[]>>
   getProduct(productId: string): (Product | undefined);
 }
 
@@ -18,7 +25,7 @@ export const ProductProvider: React.FC = ({ children }) => {
   }, [products]);
 
   return (
-    <ProductContext.Provider value={{ products, getProduct }}>
+    <ProductContext.Provider value={{ products, setProducts, getProduct }}>
       {children}
     </ProductContext.Provider>
   );

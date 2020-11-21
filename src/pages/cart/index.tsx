@@ -19,9 +19,12 @@ import PaymentButtons from './components/paymentButtons';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { OrderContext } from '../../context/order';
 import { Link } from 'react-router-dom';
+import FinishDialog from '../../components/finishDialog';
 
 const Card: React.FC = () => {
   const { order, removeItem, getTotal } = useContext(OrderContext);
+  
+  // Save cart on local storage
 
   return (
     <Container>
@@ -79,6 +82,7 @@ const Card: React.FC = () => {
       {getTotal() > 0 && (
         <PaymentButtons />
       )}
+      <FinishDialog />
     </Container>
   );
 };

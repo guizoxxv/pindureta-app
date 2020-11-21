@@ -13,7 +13,6 @@ const QuantityRow: React.FC<QuantityRowData> = ({ productId }) => {
     getQuantityRow,
     increaseQuantity,
     decreaseQuantity,
-    removeItem
   } = useContext(OrderContext);
 
   return (

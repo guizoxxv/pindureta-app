@@ -1,5 +1,12 @@
 
-import React, { createContext, useCallback, useContext, useState } from 'react';
+import React, {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useContext,
+  useState
+} from 'react';
 import { appName } from '../config';
 import Order from '../interfaces/order';
 import { ProductContext } from './product';
@@ -11,6 +18,7 @@ interface OrderContextData {
   removeItem(productId: string): void;
   getTotal(): number;
   order: Order;
+  setOrder: Dispatch<SetStateAction<Order>>;
 }
 
 export const OrderContext = createContext<OrderContextData>({} as OrderContextData);
@@ -36,6 +44,12 @@ export const OrderProvider: React.FC = ({ children }) => {
     }
 
     return 0;
+  }, [order]);
+
+  const removeItem = useCallback((productId: string): void => {
+    delete order[productId];
+    
+    setOrder({ ...order });
   }, [order]);
 
   const increaseQuantity = useCallback((productId: string): void => {
@@ -66,7 +80,7 @@ export const OrderProvider: React.FC = ({ children }) => {
         }
       });
     }
-  }, [order]);
+  }, [order, getProduct]);
 
   const decreaseQuantity = useCallback((productId: string): void => {
     const orderItem = order[productId];
@@ -85,13 +99,7 @@ export const OrderProvider: React.FC = ({ children }) => {
         removeItem(productId);
       }
     }
-  }, [order]);
-
-  const removeItem = useCallback((productId: string): void => {
-    delete order[productId];
-    
-    setOrder({ ...order });
-  }, [order]);
+  }, [order, removeItem]);
 
   const getTotal = useCallback((): number => {
     return Object.values(order).reduce((accumulator, currentValue) => {
@@ -107,6 +115,7 @@ export const OrderProvider: React.FC = ({ children }) => {
       removeItem,
       getTotal,
       order,
+      setOrder,
     }}>
       {children}
     </OrderContext.Provider>
