@@ -23,5 +23,3 @@ export const ProductProvider: React.FC = ({ children }) => {
     </ProductContext.Provider>
   );
 };
-
-export default ProductProvider;

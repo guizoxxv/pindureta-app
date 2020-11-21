@@ -18,16 +18,15 @@ export const OrderContext = createContext<OrderContextData>({} as OrderContextDa
 export const OrderProvider: React.FC = ({ children }) => {
   const { getProduct } = useContext(ProductContext);
 
-  // const [order, setOrder] = useState<Order>(() => {
-  //   const orderFromStorage = localStorage.getItem(`@${appName}:order`);
+  const [order, setOrder] = useState<Order>(() => {
+    const orderFromStorage = localStorage.getItem(`@${appName}:order`);
 
-  //   if (orderFromStorage) {
-  //     return JSON.parse(orderFromStorage);
-  //   }
+    if (orderFromStorage) {
+      return JSON.parse(orderFromStorage);
+    }
 
-  //   return {} as Order;
-  // });
-  const [order, setOrder] = useState<Order>({} as Order);
+    return {} as Order;
+  });
 
   const getQuantityRow = useCallback((productId: string): number => {
     const orderItem = order[productId];
@@ -113,5 +112,3 @@ export const OrderProvider: React.FC = ({ children }) => {
     </OrderContext.Provider>
   );
 };
-
-export default OrderProvider;
