@@ -16,6 +16,7 @@ const dialogs: DialogState = {
   payNow: false,
   finish: false,
   logout: false,
+  orderTableMore: false,
 }
 
 export const DialogContext = createContext<DialogContextData>({} as DialogContextData);

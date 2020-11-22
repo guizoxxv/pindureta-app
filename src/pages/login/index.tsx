@@ -86,8 +86,8 @@ const Login: React.FC = () => {
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" component="h4" align="center">
-        Login
+      <Typography variant="h5" component="h5" align="center">
+        Pindureta
       </Typography>
       <Card className={classes.card} variant="outlined">
         <CardContent className={classes.cardContent}>
@@ -126,7 +126,7 @@ const Login: React.FC = () => {
             </Box>
             <Box mt={2} textAlign="center">
               <Button type="submit" variant="contained" color="primary">
-                Submit
+                Login
               </Button>
             </Box>
           </form>

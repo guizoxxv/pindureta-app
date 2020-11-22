@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
-import { Button } from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
 import LogoutDialog from './logoutDialog';
 import { DialogContext } from '../context/dialog';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const LogoutButton: React.FC = () => {
   const { open } = useContext(DialogContext);
@@ -11,10 +12,13 @@ const LogoutButton: React.FC = () => {
       <Button
         type="button"
         variant="outlined"
-        color="default"
+        color="secondary"
         onClick={() => open('logout')}
       >
-        Logout
+        <ExitToAppIcon />
+        <Box ml={0.5}>
+          Logout
+        </Box>
       </Button>
       <LogoutDialog />
     </>

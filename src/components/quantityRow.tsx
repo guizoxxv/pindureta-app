@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import PlusIcon from '@material-ui/icons/AddBox';
 import MinusIcon from '@material-ui/icons/IndeterminateCheckBox';
-import { Box, IconButton } from '@material-ui/core';
-import { OrderContext } from '../../../context/order';
+import { Box, IconButton, Typography } from '@material-ui/core';
+import { OrderContext } from '../context/order';
 
 interface QuantityRowData {
   productId: string;
@@ -20,8 +20,10 @@ const QuantityRow: React.FC<QuantityRowData> = ({ productId }) => {
       <IconButton onClick={() => decreaseQuantity(productId)} aria-label="decrease quantity">
         <MinusIcon fontSize="large" />
       </IconButton>
-      <Box mx={1}>
-        {getQuantityRow(productId)}
+      <Box mx={0.5}>
+        <Typography>
+          {getQuantityRow(productId)}
+        </Typography>
       </Box>
       <IconButton onClick={() => increaseQuantity(productId)} aria-label="increase quantify">
         <PlusIcon fontSize="large" />
