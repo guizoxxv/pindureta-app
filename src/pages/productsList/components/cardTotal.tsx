@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 import { OrderContext } from '../../../context/order';
 import { Link } from 'react-router-dom';
 import GoToCartButton from './goToCartButton';
-import ClearCardConfirmDialog from './clearCardConfirmDialog';
+import ClearCardDialog from './clearCardDialog';
 import { DialogContext } from '../../../context/dialog';
 
 const useStyles = makeStyles({
@@ -33,7 +33,7 @@ const CardTotal: React.FC = () => {
             variant="contained"
             color="secondary"
             size="large"
-            onClick={() => open('clearCardConfirm')}
+            onClick={() => open('clearCard')}
           >
             <DeleteIcon />
             <Box ml={0.5}>
@@ -54,7 +54,7 @@ const CardTotal: React.FC = () => {
           </Box>
         </Box>
       </Paper>
-      <ClearCardConfirmDialog />
+      <ClearCardDialog />
     </>
   );
 };

@@ -21,20 +21,24 @@ import { OrderContext } from '../../context/order';
 import { Link } from 'react-router-dom';
 import FinishDialog from '../../components/finishDialog';
 import { appName } from '../../config';
+import LogoutButton from '../../components/logoutButton';
 
 const Card: React.FC = () => {
   const { order, removeItem, getTotal } = useContext(OrderContext);
   
   useEffect((): void => {
     localStorage.setItem(`@${appName}:order`, JSON.stringify(order));
-  }, []);
+  }, [order]);
 
   return (
     <Container>
-      <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
+      <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
         <Typography variant="h4" component="h4">
           Cart 
         </Typography>
+        <LogoutButton />
+      </Box>
+      <Box mb={3}>
         <Link to="/">
           <Button type="button" variant="contained" size="medium">
             <Box mr={1} display="flex" alignItems="center">

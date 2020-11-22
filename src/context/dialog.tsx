@@ -12,9 +12,10 @@ interface DialogState {
 }
 
 const dialogs: DialogState = {
-  clearCardConfirm: false,
+  clearCard: false,
   payNow: false,
   finish: false,
+  logout: false,
 }
 
 export const DialogContext = createContext<DialogContextData>({} as DialogContextData);

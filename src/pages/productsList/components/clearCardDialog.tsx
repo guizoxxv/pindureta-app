@@ -9,8 +9,8 @@ import {
 import { DialogContext } from '../../../context/dialog';
 import { OrderContext } from '../../../context/order';
 
-const ClearCardConfirmDialog: React.FC = () => {
-  const dialogId = 'clearCardConfirm';
+const ClearCardDialog: React.FC = () => {
+  const dialogId = 'clearCard';
   const { clear } = useContext(OrderContext);
   const { close, isOpen } = useContext(DialogContext);
 
@@ -42,4 +42,4 @@ const ClearCardConfirmDialog: React.FC = () => {
   );
 };
 
-export default ClearCardConfirmDialog;
+export default ClearCardDialog;

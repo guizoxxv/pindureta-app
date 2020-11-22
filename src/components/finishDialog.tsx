@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import {
   Dialog,
   DialogActions,
@@ -15,11 +15,14 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 const FinishDialog: React.FC = () => {
   const dialogId = 'finish';
   const { clear } = useContext(OrderContext);
-  const { close, isOpen } = useContext(DialogContext);
+  const { isOpen, close } = useContext(DialogContext);
   const { logout } = useContext(AuthContext);
+  const [count, setCount] = useState<number>(5);
 
   const handleFinish = () => {
     logout();
+
+    close(dialogId);
   };
 
   const handleContinue = () => {
@@ -28,16 +31,35 @@ const FinishDialog: React.FC = () => {
     window.location.href = '/';
   }
 
+  const countRef = useRef(count);
+  countRef.current = count;
+
+  const startCountDown = () => {
+    const interval = setInterval(() => {
+      if (countRef.current > 0) {
+        setCount(countRef.current - 1);
+      } else {
+        clearInterval(interval);
+
+        handleFinish();
+      }
+    }, 1000);
+  }
+
   return (
     <Dialog
+      onEntered={() => startCountDown()}
       open={isOpen[dialogId]}
-      onClose={() => close(dialogId)}
+      onClose={handleFinish}
       aria-labelledby="form-dialog-title"
     >
       <DialogContent>
         <Box mb={2} display="flex" alignItems="center" justifyContent="center">
           <CheckCircleIcon fontSize="large" style={{ color: '#4CAF50' }} />
           <Typography>Order received</Typography>
+        </Box>
+        <Box my={1}>
+          <Typography>You'll be logged out in {count}s</Typography>
         </Box>
       </DialogContent>
       <DialogActions>

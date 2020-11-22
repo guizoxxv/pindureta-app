@@ -48,6 +48,10 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const logout = useCallback((): void => {
     console.log('logout');
+    Object.entries(localStorage)
+      .map(item => item[0])
+      .filter(item => item.startsWith(`@${appName}:`))
+      .map(item => localStorage.removeItem(item));
   }, []);
 
   return (
