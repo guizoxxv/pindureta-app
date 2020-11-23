@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   Paper,
   Typography,
@@ -11,9 +11,21 @@ import QuantityRow from '../../components/quantityRow';
 import { ProductContext } from '../../context/product';
 import LogoutButton from '../../components/logoutButton';
 import { Alert } from '@material-ui/lab';
+import { getProducts } from '../../services/api';
+import { toast } from 'react-toastify';
 
 const ProductsList: React.FC = () => {
-  const { products } = useContext(ProductContext);
+  const { products, setProducts } = useContext(ProductContext);
+
+  useEffect((): void => {
+    getProducts()
+      .then(res => {
+        setProducts(res);
+      })
+      .catch(e => {
+        toast.error('Error fetching products list');
+      });
+  }, [setProducts]);
 
   return (
     <Container>
