@@ -1,37 +1,37 @@
 {
   "data": [
     {
-      "id": "ffeab1dd-302e-40ce-9c1b-77ba8d0ac86a",
+      "_id": "ffeab1dd-302e-40ce-9c1b-77ba8d0ac86a",
       "name": "Frozen yoghurt",
       "price": 10
     },
     {
-      "id": "7e20a4e8-1376-4ccf-8827-69090d83a8fe",
+      "_id": "7e20a4e8-1376-4ccf-8827-69090d83a8fe",
       "name": "Ice cream sandwich",
       "price": 15
     },
     {
-      "id": "ef73b825-6f4a-42d5-a67d-277440b063a3",
+      "_id": "ef73b825-6f4a-42d5-a67d-277440b063a3",
       "name": "Eclair",
       "price": 20
     },
     {
-      "id": "567acc75-359b-41bb-b3a5-7c6976b626f3",
+      "_id": "567acc75-359b-41bb-b3a5-7c6976b626f3",
       "name": "Cheetos",
       "price": 25
     },
     {
-      "id": "d7fcf8be-43ef-4da3-8fdc-1ddde8d3b799",
+      "_id": "d7fcf8be-43ef-4da3-8fdc-1ddde8d3b799",
       "name": "Doritos",
       "price": 30
     },
     {
-      "id": "26dc9382-6104-40a9-970b-595409172e6e",
+      "_id": "26dc9382-6104-40a9-970b-595409172e6e",
       "name": "Ruffles",
       "price": 35
     },
     {
-      "id": "d2a3ccd8-8627-4bc8-a3f4-b57819710f04",
+      "_id": "d2a3ccd8-8627-4bc8-a3f4-b57819710f04",
       "name": "Cebolitos",
       "price": 40
     }

@@ -23,7 +23,7 @@ const OrderTableMoreDialog: React.FC<OrderTableMoreDialogData> = ({ product }) =
   const { removeItem } = useContext(OrderContext);
 
   const handleRemoveItem = () => {
-    removeItem(product.id);
+    removeItem(product._id);
 
     close(dialogId);
   }
@@ -38,7 +38,7 @@ const OrderTableMoreDialog: React.FC<OrderTableMoreDialogData> = ({ product }) =
         <Box textAlign="center">
           <Typography>{product.name}</Typography>
         </Box>
-        <QuantityRow productId={product.id} />
+        <QuantityRow productId={product._id} />
         <Button
           onClick={handleRemoveItem}
           variant="contained"

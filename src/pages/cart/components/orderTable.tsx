@@ -53,7 +53,7 @@ const OrderTable: React.FC = () => {
             </TableHead>
             <TableBody>
               {Object.values(order).map(item => (
-                <TableRow key={item.id}>
+                <TableRow key={item._id}>
                   <TableCell component="th" scope="row">
                     <Typography>{item.name}</Typography>
                   </TableCell>
@@ -88,10 +88,10 @@ const OrderTable: React.FC = () => {
           </TableHead>
           <TableBody>
             {Object.values(order).map(item => (
-              <TableRow key={item.id}>
+              <TableRow key={item._id}>
                 <TableCell component="th" scope="row">
                   <Box display="flex" alignItems="center">
-                    <IconButton onClick={() => removeItem(item.id)} aria-label="remove">
+                    <IconButton onClick={() => removeItem(item._id)} aria-label="remove">
                       <DeleteIcon fontSize="large" />
                     </IconButton>
                     <Box ml={0.5}>
@@ -101,7 +101,7 @@ const OrderTable: React.FC = () => {
                 </TableCell>
                 <TableCell align="center">{item.price}</TableCell>
                 <TableCell align="center">
-                  <QuantityRow productId={item.id} />
+                  <QuantityRow productId={item._id} />
                 </TableCell>
                 <TableCell align="center">{item.total}</TableCell>
               </TableRow>

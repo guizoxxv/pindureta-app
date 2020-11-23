@@ -4,8 +4,10 @@ import React, {
   Dispatch,
   SetStateAction,
   useCallback,
+  useEffect,
   useState
 } from 'react';
+import { toast } from 'react-toastify';
 import Product from '../interfaces/product';
 import { getProducts } from '../services/api';
 
@@ -18,10 +20,20 @@ interface ProductContextData {
 export const ProductContext = createContext<ProductContextData>({} as ProductContextData);
 
 export const ProductProvider: React.FC = ({ children }) => {
-  const [products, setProducts] = useState<Product[]>(getProducts());
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect((): void => {
+    getProducts()
+      .then(res => {
+        setProducts(res);
+      })
+      .catch(e => {
+        toast.error('Error fetching products list');
+      });
+  }, []);
 
   const getProduct = useCallback((productId: string): (Product | undefined) => {
-    return products.find(product => product.id === productId);
+    return products.find(product => product._id === productId);
   }, [products]);
 
   return (

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Product from '../interfaces/product';
-import productsData from '../data/products.json';
 import LoginCredentials from '../interfaces/loginCredentials';
+import { apiBaseURL } from '../config';
 
 interface LoginResponse {
   user: object;
@@ -9,7 +9,7 @@ interface LoginResponse {
 }
 
 const api = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: apiBaseURL,
 });
 
 export async function loginRequest(credentials: LoginCredentials): Promise<LoginResponse> {
@@ -21,9 +21,10 @@ export async function loginRequest(credentials: LoginCredentials): Promise<Login
   return response.data;
 };
 
-export function getProducts(): Product[] {
-  // return await api.get('/products');
-  return productsData.data;
+export async function getProducts(): Promise<Product[]> {
+  const response = await api.get('/products');
+  
+  return response.data;
 }
 
 export async function payRequest(value: number): Promise<void> {

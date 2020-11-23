@@ -46,9 +46,7 @@ const Card: React.FC = () => {
         </>
       ) : (
         <Box display="flex" alignItems="center" justifyContent="center">
-          <Typography>
-            <Alert severity="warning">Empty card</Alert>
-          </Typography>
+          <Alert severity="warning">Empty card</Alert>
         </Box>
       )}
     </Container>
