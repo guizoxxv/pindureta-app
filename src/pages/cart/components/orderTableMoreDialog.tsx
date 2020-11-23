@@ -4,7 +4,6 @@ import {
   DialogActions,
   Button,
   DialogContent,
-  IconButton,
   Box,
   Typography,
 } from '@material-ui/core';
@@ -12,40 +11,46 @@ import { DialogContext } from '../../../context/dialog';
 import QuantityRow from '../../../components/quantityRow';
 import { OrderContext } from '../../../context/order';
 import DeleteIcon from '@material-ui/icons/Delete';
+import OrderItem from '../../../interfaces/orderItem';
 
-const OrderTableMoreDialog: React.FC = () => {
+interface OrderTableMoreDialogData {
+  product: OrderItem;
+}
+
+const OrderTableMoreDialog: React.FC<OrderTableMoreDialogData> = ({ product }) => {
   const dialogId = 'orderTableMore';
   const { isOpen, close } = useContext(DialogContext);
   const { removeItem } = useContext(OrderContext);
-  const productId = 'ffeab1dd-302e-40ce-9c1b-77ba8d0ac86a';
-
-  const getOrderItem = () => {
-    //
-  };
 
   const handleRemoveItem = () => {
-    removeItem(productId);
-    
+    removeItem(product.id);
+
     close(dialogId);
   }
 
   return (
     <Dialog
-      onEntered={() => getOrderItem()}
       open={isOpen[dialogId]}
       onClose={() => close(dialogId)}
       aria-labelledby="form-dialog-title"
     >
-      <DialogContent>
-        <Box textAlign="center" mb={1}>
-          <Typography>Product Name</Typography>
-        </Box>
-        <QuantityRow productId={productId} />
+      <DialogContent style={{paddingTop:'8px'}}>
         <Box textAlign="center">
-          <IconButton onClick={handleRemoveItem} aria-label="remove">
-            <DeleteIcon fontSize="large" />
-          </IconButton>
+          <Typography>{product.name}</Typography>
         </Box>
+        <QuantityRow productId={product.id} />
+        <Button
+          onClick={handleRemoveItem}
+          variant="contained"
+          color="default"
+          size="small"
+          fullWidth
+        >
+          <DeleteIcon fontSize="large" />
+          <Box ml={0.5}>
+            Remove
+          </Box>
+        </Button>
       </DialogContent>
       <DialogActions>
         <Button

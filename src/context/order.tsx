@@ -103,7 +103,7 @@ export const OrderProvider: React.FC = ({ children }) => {
     setOrder({});
 
     localStorage.removeItem(`@${appName}:order`);
-  }, [order]);
+  }, []);
 
   const getTotal = useCallback((): number => {
     return Object.values(order).reduce((accumulator, currentValue) => {

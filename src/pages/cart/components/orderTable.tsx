@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   TableContainer,
   Table,
@@ -18,15 +18,23 @@ import QuantityRow from '../../../components/quantityRow';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { DialogContext } from '../../../context/dialog';
 import OrderTableMoreDialog from './orderTableMoreDialog';
+import OrderItem from '../../../interfaces/orderItem';
 
 const OrderTable: React.FC = () => {
   const { order, removeItem } = useContext(OrderContext);
   const { open } = useContext(DialogContext);
   const isMobile = true;
+  const [selectedItem, setSelectedItem] = useState<OrderItem>({} as OrderItem);
   
   useEffect((): void => {
     localStorage.setItem(`@${appName}:order`, JSON.stringify(order));
   }, [order]);
+
+  const handleOpenOrderTableMoreDialog = (product: OrderItem): void => {
+    setSelectedItem(product);
+    
+    open('orderTableMore');
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -53,16 +61,16 @@ const OrderTable: React.FC = () => {
                       ${item.price} x {item.quantity} = ${item.total}
                     </Typography>
                   </TableCell>
-                  <TableCell>
+                  <TableCell align="right">
                     <IconButton aria-label="more">
-                      <MoreVertIcon onClick={() => open('orderTableMore')} />
+                      <MoreVertIcon onClick={() => handleOpenOrderTableMoreDialog(item)} />
                     </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-          <OrderTableMoreDialog />
+          <OrderTableMoreDialog product={selectedItem} />
         </>
       ) : (
         <Table aria-label="simple table">

@@ -43,7 +43,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     setData({
       user,
       token,
-    })
+    });
   }, []);
 
   const logout = useCallback((): void => {

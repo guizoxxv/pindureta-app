@@ -13,16 +13,12 @@ const api = axios.create({
 });
 
 export async function loginRequest(credentials: LoginCredentials): Promise<LoginResponse> {
-  try {
-    const response = await api.post<LoginResponse>('/login', {
-      email: credentials.email,
-      password: credentials.password,
-    });
+  const response = await api.post<LoginResponse>('/login', {
+    email: credentials.email,
+    password: credentials.password,
+  });
 
-    return response.data;
-  } catch (e) {
-    throw e;
-  }
+  return response.data;
 };
 
 export function getProducts(): Product[] {

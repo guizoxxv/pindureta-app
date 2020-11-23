@@ -14,6 +14,7 @@ import * as Yup from 'yup';
 import { ValidationErrors, getValidationErrors } from '../../utils/validationErrors';
 import { AuthContext } from '../../context/auth'; 
 import LoginCredentials from '../../interfaces/loginCredentials';
+import { toast } from 'react-toastify';
 
 interface FormInputs extends LoginCredentials, ValidationErrors {};
 
@@ -54,17 +55,17 @@ const Login: React.FC = () => {
         abortEarly: false,
       });
 
-      login({
+      await login({
         email,
         password,
       });
-    } catch(err) {
+    } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const validationErrors = getValidationErrors(err);
         setValidationErrors(validationErrors as FormInputs);
       }
       
-      // Open toast
+      toast.error('Login failed');
     }
   }
 
