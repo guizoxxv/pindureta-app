@@ -19,12 +19,13 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { DialogContext } from '../../../context/dialog';
 import OrderTableMoreDialog from './orderTableMoreDialog';
 import OrderItem from '../../../interfaces/orderItem';
+import useWindowWidth from '../../../utils/useWindowWidth';
 
 const OrderTable: React.FC = () => {
   const { order, removeItem } = useContext(OrderContext);
   const { open } = useContext(DialogContext);
-  const isMobile = true;
   const [selectedItem, setSelectedItem] = useState<OrderItem>({} as OrderItem);
+  const { isMobile } = useWindowWidth();
   
   useEffect((): void => {
     localStorage.setItem(`@${appName}:order`, JSON.stringify(order));
@@ -32,7 +33,7 @@ const OrderTable: React.FC = () => {
 
   const handleOpenOrderTableMoreDialog = (product: OrderItem): void => {
     setSelectedItem(product);
-    
+
     open('orderTableMore');
   }
 
@@ -62,8 +63,11 @@ const OrderTable: React.FC = () => {
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <IconButton aria-label="more">
-                      <MoreVertIcon onClick={() => handleOpenOrderTableMoreDialog(item)} />
+                    <IconButton
+                      aria-label="more"
+                      onClick={() => handleOpenOrderTableMoreDialog(item)}
+                    >
+                      <MoreVertIcon />
                     </IconButton>
                   </TableCell>
                 </TableRow>
