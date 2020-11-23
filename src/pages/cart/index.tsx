@@ -17,7 +17,7 @@ const Card: React.FC = () => {
   const { getTotal } = useContext(OrderContext);
   
   return (
-    <Container disableGutters>
+    <Container>
       <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
         <Typography variant="h5" component="h5">
           Cart 

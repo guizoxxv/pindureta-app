@@ -1,4 +1,4 @@
-import { Button, Paper, Typography, Box, makeStyles } from '@material-ui/core';
+import { Button, Paper, Typography, Box, makeStyles, Hidden } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import React, { useContext } from 'react';
 import { OrderContext } from '../../../context/order';
@@ -16,6 +16,11 @@ const useStyles = makeStyles({
     width: '100%',
     backgroundColor: '#bdbdbd',
     padding: '0.5rem 2rem',
+  },
+  '@media(max-width:480px)': {
+    paper: {
+      padding: '0.5rem',
+    }
   }
 });
 
@@ -27,7 +32,12 @@ const CardTotal: React.FC = () => {
   return (
     <>
       <Paper className={classes.paper} square>
-        <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          flexWrap="no-wrap"
+        >
           <Button
             type="button"
             variant="contained"
@@ -36,13 +46,15 @@ const CardTotal: React.FC = () => {
             onClick={() => open('clearCard')}
           >
             <DeleteIcon />
-            <Box ml={0.5}>
-              Clear Cart
-            </Box>
+            <Hidden xsDown>
+              <Box ml={0.5}>
+                Clear Cart
+              </Box>
+            </Hidden>
           </Button>
           <Box>
-            <Typography component="span" style={{ marginRight: '2rem' }}>
-              <b>Total:</b> ${getTotal()}
+            <Typography component="span" style={{ marginRight: '1rem' }}>
+              <Hidden xsDown><b>Total:</b> </Hidden>${getTotal()}
             </Typography>
             {getTotal() > 0 ? (
               <Link to="/cart">

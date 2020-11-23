@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Box,
   Button,
@@ -24,10 +24,21 @@ const useStyles = makeStyles({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
+    width: '300px',
   },
   cardContent: {
     padding: '1.5rem',
-    width: '300px',
+  },
+  '@media (max-width: 480px)': {
+    card: {
+      width: 'calc(100% - 8px)',
+    },
+    cardContent: {
+      padding: '1rem',
+      '&:last-child': {
+        paddingBottom: '1rem',
+      }
+    },
   }
 });
 
@@ -39,9 +50,7 @@ const Login: React.FC = () => {
   const { login } = useContext(AuthContext); 
   
   // Transformar em useCallback
-  async function handleLogin(event: FormEvent<HTMLFormElement>): Promise<void> {
-    event.preventDefault();
-
+  async function handleLogin(): Promise<void> {
     try {
       const schema = Yup.object().shape({
         email: Yup.string().required().email(),
@@ -62,6 +71,7 @@ const Login: React.FC = () => {
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const validationErrors = getValidationErrors(err);
+        
         setValidationErrors(validationErrors as FormInputs);
       }
       
@@ -86,51 +96,54 @@ const Login: React.FC = () => {
   }
 
   return (
-    <Container maxWidth="sm">
+    <Container>
       <Typography variant="h5" component="h5" align="center">
         Pindureta
       </Typography>
       <Card className={classes.card} variant="outlined">
         <CardContent className={classes.cardContent}>
-          <form onSubmit={handleLogin}>
-            <div>
-              <TextField
-                label="E-mail"
-                type="email"
-                variant="outlined"
-                value={email}
-                onChange={e => setEmailHandler(e.target.value)}
-                error={Boolean(validationErrors?.email)}
-                fullWidth
-              />
-              {validationErrors?.email && (
-                <FormHelperText error={true}>
-                  {validationErrors.email}
-                </FormHelperText>
-              )}
-            </div>
-            <Box mt={2}>
-              <TextField
-                label="Password"
-                type="password"
-                variant="outlined"
-                value={password}
-                onChange={e => setPasswordHandler(e.target.value)}
-                error={Boolean(validationErrors?.password)}
-                fullWidth
-              />
-              {validationErrors?.password && (
-                <FormHelperText error={true}>
-                  {validationErrors.password}
-                </FormHelperText>
-              )}
-            </Box>
-            <Box mt={2} textAlign="center">
-              <Button type="submit" variant="contained" color="primary">
-                Login
-              </Button>
-            </Box>
-          </form>
+          <Box>
+            <TextField
+              label="E-mail"
+              type="email"
+              variant="outlined"
+              value={email}
+              onChange={e => setEmailHandler(e.target.value)}
+              error={Boolean(validationErrors?.email)}
+              fullWidth
+            />
+            {validationErrors?.email && (
+              <FormHelperText error={true}>
+                {validationErrors.email}
+              </FormHelperText>
+            )}
+          </Box>
+          <Box mt={2}>
+            <TextField
+              label="Password"
+              type="password"
+              variant="outlined"
+              value={password}
+              onChange={e => setPasswordHandler(e.target.value)}
+              error={Boolean(validationErrors?.password)}
+              fullWidth
+            />
+            {validationErrors?.password && (
+              <FormHelperText error={true}>
+                {validationErrors.password}
+              </FormHelperText>
+            )}
+          </Box>
+          <Box mt={2} textAlign="center">
+            <Button
+              type="button"
+              variant="contained"
+              color="primary"
+              onClick={() => handleLogin()}
+            >
+              Login
+            </Button>
+          </Box>
         </CardContent>
       </Card>
     </Container>

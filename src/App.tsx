@@ -5,9 +5,10 @@ import { ProductProvider } from './context/product';
 import { DialogProvider } from './context/dialog';
 import Routes from './routes';
 import { BrowserRouter } from 'react-router-dom';
-import './style.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { StylesProvider } from "@material-ui/core/styles";
+import './style.css';
 
 toast.configure({
   position: 'top-right',
@@ -24,7 +25,9 @@ const App: React.FC = () => (
       <ProductProvider>
         <OrderProvider>
           <DialogProvider>
-            <Routes />
+            <StylesProvider injectFirst>
+              <Routes />
+            </StylesProvider>
           </DialogProvider>
         </OrderProvider>
       </ProductProvider>

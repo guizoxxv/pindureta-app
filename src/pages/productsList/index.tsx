@@ -22,10 +22,10 @@ const ProductsList: React.FC = () => {
         </Typography>
         <LogoutButton />
       </Box>
-      <Box mb={3}>
+      <Box style={{ marginBottom: '70px' }}>
         <Grid container spacing={2}>
           {products && products.map((product, key) => (
-            <Grid item xs={4} key={key}>
+            <Grid item xs={12} sm={6} md={4} key={key}>
               <Paper>
                 <Box p={3} textAlign="center">
                   <Typography variant="h6" component="h6" noWrap>
