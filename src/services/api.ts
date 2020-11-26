@@ -37,12 +37,14 @@ export async function getProducts(token: string): Promise<Product[]> {
 
 export async function payRequest(
   token: string,
-  order: Order
+  order: Order,
+  value?: number,
 ): Promise<void> {
   await api.post(
     '/orders',
     {
       items: Object.values(order),
+      value,
     },
     {
       headers: {

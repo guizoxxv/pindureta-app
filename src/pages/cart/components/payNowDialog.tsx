@@ -21,7 +21,7 @@ import { AuthContext } from '../../../context/auth';
 import { flash } from '../../../utils/flash';
 
 interface FormInputs extends ValidationErrors {
-  total: string;
+  value: string;
 };
 
 const PayNowDialog: React.FC = () => {
@@ -29,22 +29,22 @@ const PayNowDialog: React.FC = () => {
   const { logout, data } = useContext(AuthContext);
   const { isOpen, open, close } = useContext(DialogContext);
   const { order, getTotal } = useContext(OrderContext);
-  const [total, setTotal] = useState(getTotal());
+  const [value, setValue] = useState(getTotal());
   const [validationErrors, setValidationErrors] = useState<FormInputs | null>(null);
 
   const handlePay = async () => {
     try {
       const schema = Yup.object().shape({
-        total: Yup.number().required().min(0),
+        value: Yup.number().required().min(0),
       });
 
       await schema.validate({
-        total,
+        value,
       }, {
         abortEarly: false,
       });
 
-      await payRequest(data.token, order);
+      await payRequest(data.token, order, value);
 
       close(dialogId);
 
@@ -70,12 +70,12 @@ const PayNowDialog: React.FC = () => {
     }
   }
 
-  const setTotalHandler = (value: number) => {
+  const setValueHandler = (value: number) => {
     if (validationErrors?.total) {
-     setValidationErrors({ ...validationErrors, total: '' }); 
+     setValidationErrors({ ...validationErrors, value: '' }); 
     }
 
-    setTotal(value);
+    setValue(value);
   }
 
   return (
@@ -100,8 +100,8 @@ const PayNowDialog: React.FC = () => {
             label="Value"
             type="number"
             InputProps={{ inputProps: { min: 0 } }}
-            value={total}
-            onChange={e => setTotalHandler(parseInt(e.target.value))}
+            value={value}
+            onChange={e => setValueHandler(parseInt(e.target.value))}
             error={Boolean(validationErrors?.total)}
             autoFocus
             fullWidth
