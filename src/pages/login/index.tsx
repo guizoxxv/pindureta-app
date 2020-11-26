@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -15,6 +15,7 @@ import { ValidationErrors, getValidationErrors } from '../../utils/validationErr
 import { AuthContext } from '../../context/auth'; 
 import LoginCredentials from '../../interfaces/loginCredentials';
 import { toast } from 'react-toastify';
+import { getFlash, clearFlash } from '../../utils/flash';
 
 interface FormInputs extends LoginCredentials, ValidationErrors {};
 
@@ -47,9 +48,22 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [validationErrors, setValidationErrors] = useState<FormInputs | null>(null);
   const classes = useStyles();
-  const { login } = useContext(AuthContext); 
+  const { login } = useContext(AuthContext);
   
-  // Transformar em useCallback
+  useEffect(() => {
+    const flashMessageObj = getFlash();
+
+    if (flashMessageObj) {
+      const { level, message } = JSON.parse(flashMessageObj);
+
+      toast(message, {
+        type: level,
+      });
+
+      clearFlash();
+    }
+  }, []);
+
   async function handleLogin(): Promise<void> {
     try {
       const schema = Yup.object().shape({

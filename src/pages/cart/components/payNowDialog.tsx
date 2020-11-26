@@ -16,6 +16,9 @@ import * as Yup from 'yup';
 import { ValidationErrors, getValidationErrors } from '../../../utils/validationErrors';
 import { OrderContext } from '../../../context/order';
 import { payRequest } from '../../../services/api';
+import { toast } from 'react-toastify';
+import { AuthContext } from '../../../context/auth';
+import { flash } from '../../../utils/flash';
 
 interface FormInputs extends ValidationErrors {
   total: string;
@@ -23,8 +26,9 @@ interface FormInputs extends ValidationErrors {
 
 const PayNowDialog: React.FC = () => {
   const dialogId = 'payNow';
+  const { logout, data } = useContext(AuthContext);
   const { isOpen, open, close } = useContext(DialogContext);
-  const { getTotal } = useContext(OrderContext);
+  const { order, getTotal } = useContext(OrderContext);
   const [total, setTotal] = useState(getTotal());
   const [validationErrors, setValidationErrors] = useState<FormInputs | null>(null);
 
@@ -40,8 +44,7 @@ const PayNowDialog: React.FC = () => {
         abortEarly: false,
       });
 
-      // Post to API
-      // await payRequest(total);
+      await payRequest(data.token, order);
 
       close(dialogId);
 
@@ -52,7 +55,18 @@ const PayNowDialog: React.FC = () => {
         setValidationErrors(validationErrors as FormInputs);
       }
 
-      // Open toast
+      if (err.response.status === 403) {
+        flash({
+          level: 'error',
+          message: 'Session expired',
+        });
+
+        logout();
+        
+        return;
+      }
+
+      toast.error('Payment failed');
     }
   }
 

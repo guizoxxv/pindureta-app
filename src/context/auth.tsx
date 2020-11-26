@@ -2,15 +2,15 @@
 import React, { createContext, useCallback, useState } from 'react';
 import { loginRequest } from '../services/api';
 import LoginCredentials from '../interfaces/loginCredentials';
-import { appName } from '../config';
+import { appName, flashMessageStorageId } from '../config';
 
-interface AuthState {
+interface AuthData {
   user: object;
   token: string;
 }
 
 interface AuthContextData {
-  user: object,
+  data: AuthData,
   login(credentials: LoginCredentials): Promise<void>,
   logout(): void;
 }
@@ -20,7 +20,7 @@ export const AuthContext = createContext<AuthContextData>(
 );
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const [data, setData] = useState<AuthState>(() => {
+  const [data, setData] = useState<AuthData>(() => {
     const user = localStorage.getItem(`@${appName}:user`);
     const token = localStorage.getItem(`@${appName}:userToken`);
 
@@ -31,7 +31,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       }
     }
 
-    return {} as AuthState;
+    return {} as AuthData;
   });
 
   const login = useCallback(async (credentials: LoginCredentials) => {
@@ -49,7 +49,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const logout = useCallback((): void => {
     Object.entries(localStorage)
       .map(item => item[0])
-      .filter(item => item.startsWith(`@${appName}:`))
+      .filter(item => item.startsWith(`@${appName}:`) && item !== flashMessageStorageId)
       .map(item => localStorage.removeItem(item));
 
     window.location.href = '/login';
@@ -57,7 +57,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{
-      user: data.user,
+      data,
       login,
       logout,
     }}>

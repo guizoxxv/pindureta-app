@@ -2,6 +2,7 @@ import axios from 'axios';
 import Product from '../interfaces/product';
 import LoginCredentials from '../interfaces/loginCredentials';
 import { apiBaseURL } from '../config';
+import Order from '../interfaces/order';
 
 interface LoginResponse {
   user: object;
@@ -21,18 +22,32 @@ export async function loginRequest(credentials: LoginCredentials): Promise<Login
   return response.data;
 };
 
-export async function getProducts(): Promise<Product[]> {
-  const response = await api.get('/products');
-  
+export async function getProducts(token: string): Promise<Product[]> {
+  const response = await api.get(
+    '/products',
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
   return response.data;
 }
 
-export async function payRequest(value: number): Promise<void> {
-  try {
-    await api.post('/pay', {
-      value,
-    });
-  } catch (e) {
-    throw e;
-  }
+export async function payRequest(
+  token: string,
+  order: Order
+): Promise<void> {
+  await api.post(
+    '/orders',
+    {
+      items: Object.values(order),
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    }
+  );
 }

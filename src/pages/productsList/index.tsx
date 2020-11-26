@@ -13,19 +13,25 @@ import LogoutButton from '../../components/logoutButton';
 import { Alert } from '@material-ui/lab';
 import { getProducts } from '../../services/api';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../context/auth';
 
 const ProductsList: React.FC = () => {
   const { products, setProducts } = useContext(ProductContext);
+  const { data, logout } = useContext(AuthContext);
 
   useEffect((): void => {
-    getProducts()
+    getProducts(data.token)
       .then(res => {
         setProducts(res);
       })
-      .catch(e => {
+      .catch(err => {
+        if (err.response.status === 403) {
+          logout();
+        }
+
         toast.error('Error fetching products list');
       });
-  }, [setProducts]);
+  }, [setProducts, data.token, logout]);
 
   return (
     <Container>
