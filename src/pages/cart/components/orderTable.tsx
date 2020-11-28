@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   TableContainer,
   Table,
@@ -11,7 +11,6 @@ import {
   Box,
   IconButton,
 } from '@material-ui/core';
-import { appName } from '../../../config';
 import { OrderContext } from '../../../context/order';
 import DeleteIcon from '@material-ui/icons/Delete';
 import QuantityRow from '../../../components/quantityRow';
@@ -26,10 +25,6 @@ const OrderTable: React.FC = () => {
   const { open } = useContext(DialogContext);
   const [selectedItem, setSelectedItem] = useState<OrderItem>({} as OrderItem);
   const { isMobile } = useWindowWidth();
-  
-  useEffect((): void => {
-    localStorage.setItem(`@${appName}:order`, JSON.stringify(order));
-  }, [order]);
 
   const handleOpenOrderTableMoreDialog = (product: OrderItem): void => {
     setSelectedItem(product);

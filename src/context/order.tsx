@@ -3,6 +3,7 @@ import React, {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useState
 } from 'react';
 import { appName } from '../config';
@@ -16,6 +17,7 @@ interface OrderContextData {
   removeItem(productId: string): void;
   getTotal(): number;
   clear(): void;
+  hasProduct(productId: string): boolean;
   order: Order;
 }
 
@@ -33,6 +35,10 @@ export const OrderProvider: React.FC = ({ children }) => {
 
     return {} as Order;
   });
+
+  useEffect((): void => {
+    localStorage.setItem(`@${appName}:order`, JSON.stringify(order));
+  }, [order]);
 
   const getQuantityRow = useCallback((productId: string): number => {
     const orderItem = order[productId];
@@ -105,6 +111,10 @@ export const OrderProvider: React.FC = ({ children }) => {
     localStorage.removeItem(`@${appName}:order`);
   }, []);
 
+  const hasProduct = useCallback((productId: string): boolean => {
+    return Boolean(order[productId]);
+  }, [order]);
+
   const getTotal = useCallback((): number => {
     return Object.values(order).reduce((accumulator, currentValue) => {
       return accumulator + currentValue.total;
@@ -119,6 +129,7 @@ export const OrderProvider: React.FC = ({ children }) => {
       removeItem,
       getTotal,
       clear,
+      hasProduct,
       order,
     }}>
       {children}

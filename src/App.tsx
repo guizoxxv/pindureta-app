@@ -7,7 +7,7 @@ import Routes from './routes';
 import { BrowserRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { StylesProvider } from "@material-ui/core/styles";
+import { StylesProvider } from '@material-ui/core/styles';
 import './style.css';
 
 toast.configure({

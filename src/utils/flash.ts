@@ -1,4 +1,4 @@
-import { flashMessageStorageId } from "../config";
+import { flashMessageStorageId } from '../config';
 
 type FlashMessageObj = {
   level: 'info' | 'warning' | 'error';
