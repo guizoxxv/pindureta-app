@@ -2,7 +2,9 @@
 
 SPA of an small vending spot for trustfull users. Users can choose to pay any amount during the purchase or pay later.
 
-![Screenshot from Pindurate application](./pindureta.png)
+<p style="text-align:center;">
+  <img src="./pindureta.png" alt="Screenshot from Pindureta">
+</p>
 
 > Back-end in [https://github.com/guizoxxv/pindureta-back](https://github.com/guizoxxv/pindureta-back)
 
