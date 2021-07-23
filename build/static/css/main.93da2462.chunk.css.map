@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.css"],"names":[],"mappings":"AAAA,EACE,oBACF,CAGA,yBACE,mBACE,cAAe,CACf,eACF,CACF","file":"main.93da2462.chunk.css","sourcesContent":["a {\n  text-decoration: none;\n}\n\n/* Mobile */\n@media (max-width: 480px) {\n  .MuiContainer-root {\n    padding-left: 0;\n    padding-right: 0;\n  }\n}"]}
