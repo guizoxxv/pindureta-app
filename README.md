@@ -1,4 +1,4 @@
-# Pindureta API
+# Pindureta APP
 
 SPA of an small vending spot for trustfull users. Users can choose to pay any amount during the purchase or pay later.
 
